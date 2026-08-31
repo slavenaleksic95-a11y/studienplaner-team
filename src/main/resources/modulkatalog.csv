@@ -1,0 +1,20 @@
+# Mein Studienplaner – Beispieldaten
+# M;Kuerzel;Name;ECTS;bestanden(x oder -)   VL;Titel;OrtUndZeit   AB;Titel;Frist(JJJJ-MM-TT)   VOR;Vorher;Nachher
+M;MATHE;Mathematik Grundlagen;5;x
+M;PROG1;Programmieren 1;5;x
+M;PROG2;Programmieren 2;5;-
+M;SE1;Software Engineering 1;5;-
+M;ALGO;Algorithmen und Datenstrukturen;5;-
+M;DB;Datenbanken;5;-
+M;PROJ;Softwareprojekt;10;-
+VL;Programmieren 2;Raum 3.15, Mo 10:00
+VL;Software Engineering 1;Online, Di 14:00
+AB;Uebungsblatt 3 Programmieren 2;2026-09-21
+AB;Exposee Softwareprojekt;2026-10-05
+VOR;PROG1;PROG2
+VOR;PROG1;SE1
+VOR;PROG1;DB
+VOR;MATHE;ALGO
+VOR;PROG2;ALGO
+VOR;SE1;PROJ
+VOR;ALGO;PROJ
