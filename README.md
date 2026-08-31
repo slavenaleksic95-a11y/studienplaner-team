@@ -1,5 +1,8 @@
 # Mein Studienplaner – Starter-Repo
 
+# Team
+- Slaven Aleksic
+
 Willkommen zum Foundation Course Software Engineering!
 
 Dieses Repo ist absichtlich fast leer: **Ihr entwerft und baut alles selbst** – Modell, Schichtenstruktur, Logik, Tests. Geschenkt sind nur:
