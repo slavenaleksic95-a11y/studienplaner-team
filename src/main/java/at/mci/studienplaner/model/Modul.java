@@ -58,4 +58,8 @@ public class Modul {
 
         return offen;
     }
+
+    public boolean istBelegbar() {
+        return getOffeneVoraussetzungen().isEmpty();
+    }
 }
