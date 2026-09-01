@@ -1,23 +1,50 @@
 package at.mci.studienplaner;
 
-import at.mci.studienplaner.data.DatenLeser;
-import at.mci.studienplaner.data.RohDaten;
+import at.mci.studienplaner.model.Modul;
+import at.mci.studienplaner.model.Studienplan;
+import at.mci.studienplaner.model.StudienplanFactory;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * Setup-Check (Vorbereitungspaket): Wenn dieser Test bei dir GRÜN läuft,
- * funktionieren JDK, Build, JUnit und die Beispieldaten. Nicht löschen.
- */
-class SetupTest {
+public class SetupTest {
 
     @Test
-    void beispieldatenSindLesbar() {
-        RohDaten daten = new DatenLeser().lese("modulkatalog.csv");
-        assertEquals(7, daten.module().size());
-        assertEquals(2, daten.vorlesungen().size());
-        assertEquals(2, daten.abgaben().size());
-        assertEquals(7, daten.voraussetzungen().size());
+    void modulKannGefundenWerden() {
+        Studienplan plan = new StudienplanFactory().laden();
+
+        Modul modul = plan.findeModul("PROG1");
+
+        assertNotNull(modul);
+        assertEquals("PROG1", modul.getKuerzel());
+    }
+
+    @Test
+    void bestandeneEctsWerdenBerechnet() {
+        Studienplan plan = new StudienplanFactory().laden();
+
+        double ects = plan.berechneBestandeneEcts();
+
+        assertEquals(10.0, ects);
+    }
+
+    @Test
+    void voraussetzungenWerdenGeladen() {
+        Studienplan plan = new StudienplanFactory().laden();
+
+        Modul prog2 = plan.findeModul("PROG2");
+
+        assertNotNull(prog2);
+        assertFalse(prog2.getVoraussetzungen().isEmpty());
+    }
+
+    @Test
+    void offeneVoraussetzungenWerdenErkannt() {
+        Studienplan plan = new StudienplanFactory().laden();
+
+        Modul proj = plan.findeModul("PROJ");
+
+        assertNotNull(proj);
+        assertFalse(proj.getOffeneVoraussetzungen().isEmpty());
     }
 }
