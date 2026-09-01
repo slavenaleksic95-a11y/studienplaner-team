@@ -46,4 +46,16 @@ public class Modul {
     public List<Modul> getVoraussetzungen() {
         return voraussetzungen;
     }
+
+    public List<Modul> getOffeneVoraussetzungen() {
+        List<Modul> offen = new ArrayList<>();
+
+        for (Modul modul : voraussetzungen) {
+            if (!modul.istBestanden()) {
+                offen.add(modul);
+            }
+        }
+
+        return offen;
+    }
 }
