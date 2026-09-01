@@ -3,8 +3,10 @@ package at.mci.studienplaner.model;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class Studienplan {
 
@@ -75,5 +77,45 @@ public class Studienplan {
         }
 
         return warnliste;
+    }
+
+    public boolean hatVoraussetzungsZirkel() {
+        Set<Modul> besucht = new HashSet<>();
+        Set<Modul> aktuellerPfad = new HashSet<>();
+
+        for (Modul modul : module) {
+            if (hatZirkel(modul, besucht, aktuellerPfad)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private boolean hatZirkel(
+            Modul modul,
+            Set<Modul> besucht,
+            Set<Modul> aktuellerPfad) {
+
+        if (aktuellerPfad.contains(modul)) {
+            return true;
+        }
+
+        if (besucht.contains(modul)) {
+            return false;
+        }
+
+        besucht.add(modul);
+        aktuellerPfad.add(modul);
+
+        for (Modul voraussetzung : modul.getVoraussetzungen()) {
+            if (hatZirkel(voraussetzung, besucht, aktuellerPfad)) {
+                return true;
+            }
+        }
+
+        aktuellerPfad.remove(modul);
+
+        return false;
     }
 }
