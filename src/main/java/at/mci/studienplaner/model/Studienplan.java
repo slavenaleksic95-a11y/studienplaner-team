@@ -23,6 +23,10 @@ public class Studienplan {
         termine.add(termin);
     }
 
+    public String getName() {
+        return name;
+    }
+
     public List<Modul> getModule() {
         return module;
     }
@@ -38,5 +42,17 @@ public class Studienplan {
             }
         }
         return null;
+    }
+
+    public double berechneBestandeneEcts() {
+        double ects = 0;
+
+        for (Modul modul : module) {
+            if (modul.istBestanden()) {
+                ects = ects + modul.getEcts();
+            }
+        }
+
+        return ects;
     }
 }
