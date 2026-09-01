@@ -1,5 +1,6 @@
 package at.mci.studienplaner.model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,5 +55,25 @@ public class Studienplan {
         }
 
         return ects;
+    }
+
+    public List<Abgabe> getAbgabenNaechste7Tage() {
+        List<Abgabe> warnliste = new ArrayList<>();
+
+        LocalDateTime jetzt = LocalDateTime.now();
+        LocalDateTime in7Tagen = jetzt.plusDays(7);
+
+        for (Termin termin : termine) {
+            if (termin instanceof Abgabe) {
+                Abgabe abgabe = (Abgabe) termin;
+
+                if (!abgabe.getFrist().isBefore(jetzt)
+                        && !abgabe.getFrist().isAfter(in7Tagen)) {
+                    warnliste.add(abgabe);
+                }
+            }
+        }
+
+        return warnliste;
     }
 }
