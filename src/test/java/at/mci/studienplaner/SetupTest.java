@@ -1,9 +1,12 @@
 package at.mci.studienplaner;
 
+import at.mci.studienplaner.model.Abgabe;
 import at.mci.studienplaner.model.Modul;
 import at.mci.studienplaner.model.Studienplan;
 import at.mci.studienplaner.model.StudienplanFactory;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -46,5 +49,34 @@ public class SetupTest {
 
         assertNotNull(proj);
         assertFalse(proj.getOffeneVoraussetzungen().isEmpty());
+    }
+
+    @Test
+    void modulIstBelegbarWennVoraussetzungenBestandenSind() {
+        Studienplan plan = new StudienplanFactory().laden();
+
+        Modul prog2 = plan.findeModul("PROG2");
+
+        assertNotNull(prog2);
+        assertTrue(prog2.istBelegbar());
+    }
+
+    @Test
+    void modulIstNichtBelegbarWennVoraussetzungenOffenSind() {
+        Studienplan plan = new StudienplanFactory().laden();
+
+        Modul proj = plan.findeModul("PROJ");
+
+        assertNotNull(proj);
+        assertFalse(proj.istBelegbar());
+    }
+
+    @Test
+    void deadlineWarnlisteKannErstelltWerden() {
+        Studienplan plan = new StudienplanFactory().laden();
+
+        List<Abgabe> abgaben = plan.getAbgabenNaechste7Tage();
+
+        assertNotNull(abgaben);
     }
 }
