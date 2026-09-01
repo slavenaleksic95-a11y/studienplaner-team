@@ -1,17 +1,22 @@
 package at.mci.studienplaner.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Modul {
 
     private String kuerzel;
     private String name;
     private double ects;
     private boolean bestanden;
+    private List<Modul> voraussetzungen;
 
     public Modul(String kuerzel, String name, double ects) {
         this.kuerzel = kuerzel;
         this.name = name;
         this.ects = ects;
         this.bestanden = false;
+        this.voraussetzungen = new ArrayList<>();
     }
 
     public String getKuerzel() {
@@ -32,5 +37,13 @@ public class Modul {
 
     public void setBestanden(boolean bestanden) {
         this.bestanden = bestanden;
+    }
+
+    public void addVoraussetzung(Modul modul) {
+        voraussetzungen.add(modul);
+    }
+
+    public List<Modul> getVoraussetzungen() {
+        return voraussetzungen;
     }
 }

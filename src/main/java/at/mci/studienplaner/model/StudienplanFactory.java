@@ -33,6 +33,18 @@ public class StudienplanFactory {
             plan.addTermin(abgabe);
         }
 
+        for (String[] v : daten.voraussetzungen()) {
+            String vorherKuerzel = v[0];
+            String nachherKuerzel = v[1];
+
+            Modul vorher = plan.findeModul(vorherKuerzel);
+            Modul nachher = plan.findeModul(nachherKuerzel);
+
+            if (vorher != null && nachher != null) {
+                nachher.addVoraussetzung(vorher);
+            }
+        }
+
         return plan;
     }
 }
