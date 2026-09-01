@@ -10,13 +10,19 @@ public class Modul {
     private double ects;
     private boolean bestanden;
     private List<Modul> voraussetzungen;
+    private int semester;
 
     public Modul(String kuerzel, String name, double ects) {
+        this(kuerzel, name, ects, 0);
+    }
+
+    public Modul(String kuerzel, String name, double ects, int semester) {
         this.kuerzel = kuerzel;
         this.name = name;
         this.ects = ects;
         this.bestanden = false;
         this.voraussetzungen = new ArrayList<>();
+        this.semester = semester;
     }
 
     public String getKuerzel() {
@@ -61,5 +67,13 @@ public class Modul {
 
     public boolean istBelegbar() {
         return getOffeneVoraussetzungen().isEmpty();
+    }
+
+    public int getSemester() {
+        return semester;
+    }
+
+    public void setSemester(int semester) {
+        this.semester = semester;
     }
 }

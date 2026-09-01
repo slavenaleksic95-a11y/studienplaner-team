@@ -118,4 +118,16 @@ public class Studienplan {
 
         return false;
     }
+
+    public Map<Integer, List<Modul>> getModuleNachSemester() {
+        Map<Integer, List<Modul>> moduleNachSemester = new HashMap<>();
+
+        for (Modul modul : module) {
+            moduleNachSemester
+                    .computeIfAbsent(modul.getSemester(), k -> new ArrayList<>())
+                    .add(modul);
+        }
+
+        return moduleNachSemester;
+    }
 }
