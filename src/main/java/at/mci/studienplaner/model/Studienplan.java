@@ -2,22 +2,27 @@ package at.mci.studienplaner.model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Studienplan {
 
     private String name;
     private List<Modul> module;
     private List<Termin> termine;
+    private Map<String, Modul> moduleNachKuerzel;
 
     public Studienplan(String name) {
         this.name = name;
         this.module = new ArrayList<>();
         this.termine = new ArrayList<>();
+        this.moduleNachKuerzel = new HashMap<>();
     }
 
     public void addModul(Modul modul) {
         module.add(modul);
+        moduleNachKuerzel.put(modul.getKuerzel().toUpperCase(), modul);
     }
 
     public void addTermin(Termin termin) {
@@ -37,12 +42,7 @@ public class Studienplan {
     }
 
     public Modul findeModul(String kuerzel) {
-        for (Modul modul : module) {
-            if (modul.getKuerzel().equalsIgnoreCase(kuerzel)) {
-                return modul;
-            }
-        }
-        return null;
+        return moduleNachKuerzel.get(kuerzel.toUpperCase());
     }
 
     public double berechneBestandeneEcts() {
