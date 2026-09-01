@@ -30,4 +30,13 @@ public class Studienplan {
     public List<Termin> getTermine() {
         return termine;
     }
+
+    public Modul findeModul(String kuerzel) {
+        for (Modul modul : module) {
+            if (modul.getKuerzel().equalsIgnoreCase(kuerzel)) {
+                return modul;
+            }
+        }
+        return null;
+    }
 }
