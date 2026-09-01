@@ -65,10 +65,10 @@ public class SetupTest {
     void modulIstNichtBelegbarWennVoraussetzungenOffenSind() {
         Studienplan plan = new StudienplanFactory().laden();
 
-        Modul proj = plan.findeModul("PROJ");
+        Modul planModul = plan.findeModul("PROJ");
 
-        assertNotNull(proj);
-        assertFalse(proj.istBelegbar());
+        assertNotNull(planModul);
+        assertFalse(planModul.istBelegbar());
     }
 
     @Test
@@ -78,5 +78,41 @@ public class SetupTest {
         List<Abgabe> abgaben = plan.getAbgabenNaechste7Tage();
 
         assertNotNull(abgaben);
+    }
+
+    @Test
+    void sucheBeiKleinemUndGrossemKatalogMessen() {
+        Studienplan klein = new Studienplan("Klein");
+
+        for (int i = 0; i < 100; i++) {
+            klein.addModul(
+                    new Modul("M" + i, "Modul " + i, 5.0)
+            );
+        }
+
+        Studienplan gross = new Studienplan("Gross");
+
+        for (int i = 0; i < 100000; i++) {
+            gross.addModul(
+                    new Modul("M" + i, "Modul " + i, 5.0)
+            );
+        }
+
+        long startKlein = System.nanoTime();
+        klein.findeModul("M99");
+        long endeKlein = System.nanoTime();
+
+        long startGross = System.nanoTime();
+        gross.findeModul("M99999");
+        long endeGross = System.nanoTime();
+
+        long zeitKlein = endeKlein - startKlein;
+        long zeitGross = endeGross - startGross;
+
+        System.out.println("Kleiner Katalog: " + zeitKlein + " ns");
+        System.out.println("Großer Katalog: " + zeitGross + " ns");
+
+        assertNotNull(klein.findeModul("M99"));
+        assertNotNull(gross.findeModul("M99999"));
     }
 }
