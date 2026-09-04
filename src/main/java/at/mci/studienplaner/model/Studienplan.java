@@ -79,6 +79,41 @@ public class Studienplan {
         return warnliste;
     }
 
+    /*
+     * M5:
+     * Findet alle Module, die durch ein bestimmtes Modul
+     * direkt oder indirekt freigeschaltet werden.
+     */
+    public List<Modul> getFreigeschalteteModule(Modul startModul) {
+        List<Modul> ergebnis = new ArrayList<>();
+        Set<Modul> besucht = new HashSet<>();
+
+        findeFreigeschalteteModule(startModul, ergebnis, besucht);
+
+        return ergebnis;
+    }
+
+    private void findeFreigeschalteteModule(
+            Modul startModul,
+            List<Modul> ergebnis,
+            Set<Modul> besucht) {
+
+        if (!besucht.add(startModul)) {
+            return;
+        }
+
+        for (Modul modul : module) {
+            if (modul.getVoraussetzungen().contains(startModul)) {
+
+                if (!ergebnis.contains(modul)) {
+                    ergebnis.add(modul);
+                }
+
+                findeFreigeschalteteModule(modul, ergebnis, besucht);
+            }
+        }
+    }
+
     public boolean hatVoraussetzungsZirkel() {
         Set<Modul> besucht = new HashSet<>();
         Set<Modul> aktuellerPfad = new HashSet<>();
